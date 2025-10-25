@@ -70,6 +70,6 @@ int main(void) {
     */
     char txt[] = "It\'s alright."; // esempio apostrofo
 
-
+//mancano puntatori
     return 0;
 }
