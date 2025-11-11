@@ -183,6 +183,68 @@ void mantieni_freq_minima(int *A, int N, int K, int *M) {
     }
     free(A_occ);
 }
+
+int rim(int **A, int N) {
+    if (N==0) {
+        return 0;
+    }
+    int M=0;
+    for (int i = 0; i < N; i++) {
+        if (*A[i] == 0) {
+            M++;
+        }
+    }
+    if (M==0)
+        return -2;
+
+    int *V;
+    V = (int *)malloc(sizeof(int) * M);
+    int j=0;
+    for (int i = 0; i < N; i++) {
+        if (A[i] != 0) {
+            V[j] = *A[i];
+            j++;
+        }
+    }
+    free(*A);
+    *A = V;
+    return M;
+}
+
+int copia_arr(int *A, int N, int target, int **V, int M, int *size) {
+    if (M<=0)
+        return -1;
+    int count_d=0;
+    int count_e=0;
+    for (int i = 0; i < N; i++) {
+        if (A[i] == target) {
+            count_d++;
+        }
+        else {
+            count_e++;
+        }
+    }
+    *size = count_d*M + count_e;
+    *V = (int *)malloc(*size * sizeof(int));
+    if (*V == NULL) {
+        return -2;
+    }
+    int j=0;
+    for (int i = 0; i < N; i++) {
+        if (A[i] != target) {
+            *V[j] = A[i];
+            j++;
+        }
+        else {
+            for (int k = j; k < M; k++) {
+                *V[k] = A[i];
+            }
+            j+=M;
+        }
+    }
+    return 0;
+}
+
 int main(void) {
     int A[] = {2,3,3,3,1,5,6,4,4,7,6,13,14,20};
     int B[] = {2,0,0,5,5,5,4,3,2};
